@@ -1,0 +1,72 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh; /* Set minimum height to the viewport height */
+
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  
+  .welcome-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px; /* Add padding for spacing */
+    background-color: #f9f9f9; /* Update background color */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  .text {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .image {
+    width: 80%; /* Adjust width as needed */
+    max-width: 1000px; /* Maximum width for the image */
+    height: auto; /* Maintain aspect ratio */
+    overflow: hidden; /* Hide overflow if the image exceeds the container */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  
+  .image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  /* Update Typography */
+.text h1 {
+  font-size: 2.5rem; /* Adjust heading size */
+  font-weight: bold;
+  font-family: 'Your Chosen Font', sans-serif; /* Update font family */
+}
+
+.text p {
+  font-size: 1.2rem; /* Adjust paragraph size */
+  line-height: 1.6; /* Improve readability with appropriate line height */
+  /* Add additional styling for better readability */
+}
+
+footer {
+  width: 97%;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+}
+main {
+  flex: 1; /* Allow main content to expand */
+}
+
+  

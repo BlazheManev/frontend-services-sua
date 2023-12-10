@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface Termin {
   id: string;
@@ -14,20 +15,38 @@ interface Termin {
 
 const TerminiList: React.FC = () => {
   const [termini, setTermini] = useState<Termin[]>([]);
+  const navigate = useNavigate();
+
+  
+  useEffect(() => {
+    const isLoggedIn = !!sessionStorage.getItem('jwtToken');
+
+    if (isLoggedIn==false) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   useEffect(() => {
-    // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await axios.get<Termin[]>('http://localhost:11005/api/termini/all');
+        const token = sessionStorage.getItem('jwtToken');
+        if (!token) {
+          navigate('/');
+          return;
+        }
+        const response = await axios.get<Termin[]>('http://localhost:11005/api/termini/all', {
+          headers: {
+            Authorization: `${token}` // Set the token in the Authorization header
+          }
+        });
         setTermini(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
-  }, []); // Empty dependency array to fetch data only once on component mount
+  }, [navigate]); // Empty dependency array to fetch data only once on component mount
 
   return (
     <div className="termini-list-container">

@@ -23,4 +23,16 @@
   .nav-link:hover {
     background-color: #555;
   }
+  .image {
+    /* Styles for the image container */
+    max-width: 40%; /* Adjust the maximum width as needed */
+    max-height: 300px; /* Adjust the maximum height as needed */
+    overflow: hidden; /* Hide overflow if the image exceeds the container */
+  }
   
+  .image img {
+    /* Styles for the image */
+    width: 100%;
+    height: auto;
+    display: block;
+  }

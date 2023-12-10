@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom';
 
 interface AddTerminFormProps {
   onTerminAdded?: () => void;
 }
 
 const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = !!sessionStorage.getItem('jwtToken');
+       console.log("sdasd")
+       console.log(isLoggedIn)
+    if (isLoggedIn==false) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({
     patientId: '',
     dateTime: new Date(), // Initial value for date-time
@@ -15,6 +27,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
     doctor: '',
     specialRequests: '',
   });
+  
 
   const handleChange = (date: Date | null) => {
     if (date) {
@@ -36,7 +49,19 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:11005/api/termini/create', formData);
+      const token = sessionStorage.getItem('jwtToken');
+  
+      const response = await axios.post(
+        'http://localhost:11005/api/termini/create',
+        formData,
+        {
+          headers: {
+            Authorization: `${token}`, // Include the JWT token in the headers
+            'Content-Type': 'application/json', // Adjust content type if necessary
+          },
+        }
+      );
+  
       setFormData({
         patientId: '',
         dateTime: new Date(),
@@ -44,6 +69,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
         doctor: '',
         specialRequests: '',
       });
+  
       // Trigger the parent component to update termini list after adding a new termin
       if (onTerminAdded) {
         onTerminAdded();
@@ -52,7 +78,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
       console.error('Error adding termin:', error);
     }
   };
-
+  
   return (
     <div>
       <h2>Add New Termin</h2>

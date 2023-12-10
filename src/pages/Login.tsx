@@ -1,10 +1,19 @@
-// LoginForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = !!sessionStorage.getItem('jwtToken');
+
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,8 +27,11 @@ const LoginForm: React.FC = () => {
         }
       );
 
-      console.log('Login success:', response.data);
-      // Handle success: redirect to TerminiList
+      console.log('Login success:', response.data.token);
+
+      sessionStorage.setItem('jwtToken', response.data.token);
+
+      navigate('/');
     } catch (error) {
       console.error('Login error:', error);
       // Handle error: show message, set state, etc.
@@ -44,6 +56,10 @@ const LoginForm: React.FC = () => {
         />
         <button type="submit">Login</button>
       </form>
+      <h1>
+        username: newjwt 
+        pass: newjwt
+      </h1>
     </div>
   );
 };

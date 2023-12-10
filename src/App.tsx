@@ -10,6 +10,7 @@ import AddTerminForm from './pages/AddTerminForm';
 import Navbar from './Navbar';
 import LoginForm from './pages/Login';
 import RegistrationForm from './pages/RegisterForm';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <Navbar/>
         <Routes>
 
-          <Route path="/" element={<p>Osnovna stran</p>} />
+        <Route path="/" element={<Home></Home>} />
 
           <Route path="/TerminiList" element={<TerminiList></TerminiList>} />
           <Route path="/AddTerminForm" element={<AddTerminForm></AddTerminForm>} />

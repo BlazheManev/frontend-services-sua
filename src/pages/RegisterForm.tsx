@@ -1,17 +1,25 @@
-// RegistrationForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
     // Implement your registration logic here using form data
   };
+  useEffect(() => {
+    const isLoggedIn = !!sessionStorage.getItem('jwtToken');
 
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate]);
   return (
     <div>
       <h2>Registration</h2>
