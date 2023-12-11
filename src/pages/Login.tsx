@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css'; // Import your CSS file
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -39,27 +40,26 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      <form className="login-form" onSubmit={handleLogin}>
         <input
+          className="input-field"
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
+          className="input-field"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button className="login-button" type="submit">Login</button>
       </form>
-      <h1>
-        username: newjwt 
-        pass: newjwt
-      </h1>
+      <p className="credentials-note">Default credentials: username: newjwt | pass: newjwt</p>
     </div>
   );
 };

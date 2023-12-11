@@ -1,0 +1,80 @@
+/* AddTerminForm.css */
+
+.add-termin-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .termin-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="submit"] {
+    padding: 10px;
+    width: calc(100% - 24px); /* Adjust width for better spacing */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+  }
+  
+  .submit-button {
+    padding: 12px 20px;
+    width: calc(100% );
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    font-weight: bold;
+    text-transform: uppercase;
+    outline: none; /* Remove outline on button click */
+  }
+  
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  .react-datepicker-wrapper {
+    width: calc(100% - 20px); /* Adjust the width of the DatePicker */
+    margin-bottom: 20px;
+  }
+  
+  .react-datepicker {
+    width: 100%;
+  }
+  
+  .react-datepicker__input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    text-align-last:center
+  }
+  

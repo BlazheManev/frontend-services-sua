@@ -1,8 +1,9 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
+import '../styles/AddTerminForm.css'; // Import your CSS file
 
 interface AddTerminFormProps {
   onTerminAdded?: () => void;
@@ -13,9 +14,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
 
   useEffect(() => {
     const isLoggedIn = !!sessionStorage.getItem('jwtToken');
-       console.log("sdasd")
-       console.log(isLoggedIn)
-    if (isLoggedIn==false) {
+    if (isLoggedIn === false) {
       navigate('/');
     }
   }, [navigate]);
@@ -27,7 +26,6 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
     doctor: '',
     specialRequests: '',
   });
-  
 
   const handleChange = (date: Date | null) => {
     if (date) {
@@ -50,7 +48,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('jwtToken');
-  
+
       const response = await axios.post(
         'http://localhost:11005/api/termini/create',
         formData,
@@ -61,7 +59,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
           },
         }
       );
-  
+
       setFormData({
         patientId: '',
         dateTime: new Date(),
@@ -69,7 +67,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
         doctor: '',
         specialRequests: '',
       });
-  
+
       // Trigger the parent component to update termini list after adding a new termin
       if (onTerminAdded) {
         onTerminAdded();
@@ -78,18 +76,17 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
       console.error('Error adding termin:', error);
     }
   };
-  
+
   return (
-    <div>
+    <div className="add-termin-container">
       <h2>Add New Termin</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Patient ID:
+      <form className="termin-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Patient ID:</label>
           <input type="text" name="patientId" value={formData.patientId} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>
-          Date Time:
+        </div>
+        <div className="form-group">
+          <label>Date Time:</label>
           <DatePicker
             selected={formData.dateTime}
             onChange={(date: Date | null) => handleChange(date)}
@@ -98,24 +95,20 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
             timeIntervals={15}
             dateFormat="yyyy-MM-dd HH:mm"
           />
-        </label>
-        <br />
-        <label>
-          Service Type:
+        </div>
+        <div className="form-group">
+          <label>Service Type:</label>
           <input type="text" name="serviceType" value={formData.serviceType} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>
-          Doctor:
+        </div>
+        <div className="form-group">
+          <label>Doctor:</label>
           <input type="text" name="doctor" value={formData.doctor} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>
-          Special Requests:
+        </div>
+        <div className="form-group">
+          <label>Special Requests:</label>
           <input type="text" name="specialRequests" value={formData.specialRequests} onChange={handleInputChange} />
-        </label>
-        <br />
-        <button type="submit">Add Termin</button>
+        </div>
+        <button className="submit-button" type="submit">Add Termin</button>
       </form>
     </div>
   );
