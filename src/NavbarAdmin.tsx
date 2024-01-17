@@ -81,6 +81,12 @@ function Navbar() {
                 List of Syptoms
               </Link>
             </li>
+            
+            <li className="nav-item">
+              <Link to="/AddDisease" className="nav-link">
+                Add Disease
+              </Link>
+            </li>
             <li className="nav-item">
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 Logout

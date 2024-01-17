@@ -9,13 +9,14 @@ import NavbarAdmin from './NavbarAdmin';
 import LoginForm from './pages/userMicroservice/Login';
 import RegistrationForm from './pages/userMicroservice/RegisterForm';
 import Home from './pages/Home';
-import DiseaseList from './pages/DiseaseList';
+import DiseaseList from './pages/diseaseMicroservice/DiseaseList';
 import ECardList from './pages/eCardMicroservice/ECardList';
 import ResetPass from './pages/userMicroservice/ResetPassword';
 import AllUsers from './pages/userMicroservice/AllUsers';
 import AddCard from './pages/eCardMicroservice/AddECardForm';
 import SymptomList from './pages/syptomsMicroservice/SymptomList';
 import Notifications from './pages/notificationservice/Notifications';
+import AddDisease from './pages/diseaseMicroservice/AddDiseaseForm';
 
 function App() {
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
@@ -37,6 +38,7 @@ function App() {
           <Route path="/ResetPass" element={<ResetPass />} />
           <Route path="/SymptomList" element={<SymptomList />} />
           <Route path="/Notifications" element={<Notifications />} />
+          <Route path="/AddDisease" element={<AddDisease />} />
 
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}
