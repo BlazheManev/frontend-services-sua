@@ -14,6 +14,7 @@ import ECardList from './pages/eCardMicroservice/ECardList';
 import ResetPass from './pages/userMicroservice/ResetPassword';
 import AllUsers from './pages/userMicroservice/AllUsers';
 import AddCard from './pages/eCardMicroservice/AddECardForm';
+import SymptomList from './pages/syptomsMicroservice/SymptomList';
 
 function App() {
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
@@ -33,6 +34,7 @@ function App() {
           <Route path="/Login" element={<LoginForm />} />
           <Route path="/Register" element={<RegistrationForm />} />
           <Route path="/ResetPass" element={<ResetPass />} />
+          <Route path="/SymptomList" element={<SymptomList />} />
 
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}

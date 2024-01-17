@@ -39,26 +39,37 @@ function Navbar() {
                 Termin List
               </Link>
             </li>
+            
             <li className="nav-item">
               <Link to="/DiseaseList" className="nav-link">
                 Disease List
               </Link>
             </li>
+
             <li className="nav-item">
               <Link to="/ECardList" className="nav-link">
                 E-Card List
               </Link>
             </li>
+
             <li className="nav-item">
               <Link to="/AddTerminForm" className="nav-link">
                 Add Termin
               </Link>
             </li>
+
             <li className="nav-item">
               <Link to="/ResetPass" className="nav-link">
                 Forgot Password
               </Link>
             </li>
+
+            <li className="nav-item">
+              <Link to="/SymptomList" className="nav-link">
+                List of Syptoms
+              </Link>
+            </li>
+
             <li className="nav-item">
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 Logout

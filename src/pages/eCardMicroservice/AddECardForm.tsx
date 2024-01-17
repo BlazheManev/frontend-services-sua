@@ -114,7 +114,7 @@ const AddECardForm: React.FC = () => {
 
   return (
     
-    <div className="add-ecard-container">
+    <div className="add-termin-container">
       <h2>Add New eCard</h2>
       <form className="termin-form" onSubmit={handleSubmit}>
       <div className="form-group">
