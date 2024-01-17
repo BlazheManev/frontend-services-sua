@@ -10,9 +10,10 @@ import LoginForm from './pages/userMicroservice/Login';
 import RegistrationForm from './pages/userMicroservice/RegisterForm';
 import Home from './pages/Home';
 import DiseaseList from './pages/DiseaseList';
-import ECardList from './pages/ECardList';
+import ECardList from './pages/eCardMicroservice/ECardList';
 import ResetPass from './pages/userMicroservice/ResetPassword';
 import AllUsers from './pages/userMicroservice/AllUsers';
+import AddCard from './pages/eCardMicroservice/AddECardForm';
 
 function App() {
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
@@ -35,6 +36,7 @@ function App() {
 
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}
+          {isAdmin == true && <Route path="/AddCard" element={<AddCard />} />}
 
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>

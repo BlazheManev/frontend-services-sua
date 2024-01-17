@@ -33,6 +33,8 @@ const LoginForm: React.FC = () => {
         sessionStorage.setItem('Admin', "true");
       }
       sessionStorage.setItem('jwtToken', response.data.token);
+      sessionStorage.setItem('username', username);
+
       window.location.reload();
       navigate('/');
 

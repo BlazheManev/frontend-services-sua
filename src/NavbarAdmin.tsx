@@ -11,6 +11,7 @@ function Navbar() {
   const handleLogout = () => {
     sessionStorage.removeItem('jwtToken');
     sessionStorage.removeItem('Admin');
+    sessionStorage.removeItem('username');
 
     navigate('/'); // Redirect to home after logout
     window.location.reload();
@@ -61,6 +62,11 @@ function Navbar() {
             <li className="nav-item">
               <Link to="/AllUsers" className="nav-link">
                 All Users
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/AddCard" className="nav-link">
+                Add Card
               </Link>
             </li>
             
