@@ -6,18 +6,19 @@ import { useNavigate } from 'react-router-dom';
 function Navbar() {
   const isLoggedIn = !!sessionStorage.getItem('jwtToken'); // Check if user is logged in
   const navigate = useNavigate();
-  console.log(isLoggedIn);
+  const admin = !!sessionStorage.getItem('Admin'); // Check if user is logged in
 
   const handleLogout = () => {
     sessionStorage.removeItem('jwtToken');
     sessionStorage.removeItem('Admin');
+
     navigate('/'); // Redirect to home after logout
     window.location.reload();
 
   };
 
   const handleLoginClick = () => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !admin) {
       navigate('/login');
     }
   };
@@ -57,6 +58,12 @@ function Navbar() {
                 Forgot Password
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/AllUsers" className="nav-link">
+                All Users
+              </Link>
+            </li>
+            
             <li className="nav-item">
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 Logout

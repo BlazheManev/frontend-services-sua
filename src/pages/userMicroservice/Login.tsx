@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Login.css'; // Import your CSS file
+import '../../styles/Login.css'; // Import your CSS file
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -29,10 +29,13 @@ const LoginForm: React.FC = () => {
       );
 
       console.log('Login success:', response.data.token);
-
+      if(username == "Admin"){
+        sessionStorage.setItem('Admin', "true");
+      }
       sessionStorage.setItem('jwtToken', response.data.token);
-
+      window.location.reload();
       navigate('/');
+
     } catch (error) {
       console.error('Login error:', error);
       // Handle error: show message, set state, etc.
