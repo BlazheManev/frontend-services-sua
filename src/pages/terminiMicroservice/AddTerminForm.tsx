@@ -3,7 +3,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
-import '../styles/AddTerminForm.css'; // Import your CSS file
+import '../../styles/AddTerminForm.css'; // Import your CSS file
 
 interface AddTerminFormProps {
   onTerminAdded?: () => void;

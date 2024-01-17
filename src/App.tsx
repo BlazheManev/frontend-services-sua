@@ -2,8 +2,8 @@ import React from 'react';
 import './styles/App.css';
 import { Routes, Route, Navigate, BrowserRouter as Router } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import TerminiList from './pages/TerminiList';
-import AddTerminForm from './pages/AddTerminForm';
+import TerminiList from './pages/terminiMicroservice/TerminiList';
+import AddTerminForm from './pages/terminiMicroservice/AddTerminForm';
 import Navbar from './Navbar';
 import NavbarAdmin from './NavbarAdmin';
 import LoginForm from './pages/userMicroservice/Login';
@@ -15,6 +15,7 @@ import ResetPass from './pages/userMicroservice/ResetPassword';
 import AllUsers from './pages/userMicroservice/AllUsers';
 import AddCard from './pages/eCardMicroservice/AddECardForm';
 import SymptomList from './pages/syptomsMicroservice/SymptomList';
+import Notifications from './pages/notificationservice/Notifications';
 
 function App() {
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Register" element={<RegistrationForm />} />
           <Route path="/ResetPass" element={<ResetPass />} />
           <Route path="/SymptomList" element={<SymptomList />} />
+          <Route path="/Notifications" element={<Notifications />} />
 
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}
