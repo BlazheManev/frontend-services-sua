@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 interface User {
@@ -15,6 +16,7 @@ const UsersList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState({ username: '', email: '', isAdmin: false, password: '' });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +38,13 @@ const UsersList: React.FC = () => {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const isLoggedIn = !!sessionStorage.getItem('jwtToken');
+    if (isLoggedIn === false) {
+      navigate('/');
+    }
+  }, [navigate]);
+
 
   const handleEditClick = (user: User) => {
     setEditingUserId(user._id);

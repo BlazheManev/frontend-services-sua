@@ -17,13 +17,13 @@ const AddECardForm: React.FC = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>([]);
   const [formData, setFormData] = useState({
-    userId: '',
+    userId: sessionStorage.getItem('id'),
     dateOfBirth: new Date(),
     weight: 0,
     height: 0,
     bloodType: '',
-    diseases: [{ diseaseName: '' }],
-    appointments: [''],
+  // diseases: [{ diseaseName: '' }],
+   // appointments: [''],
   });
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const AddECardForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+/*
   const handleAddDisease = () => {
     setFormData({
       ...formData,
@@ -94,12 +94,16 @@ const AddECardForm: React.FC = () => {
     const updatedAppointments = formData.appointments.filter((_, i) => i !== index);
     setFormData({ ...formData, appointments: updatedAppointments });
   };
-
+      */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const updatedFormData = {
+      ...formData,
+      userId: sessionStorage.getItem('id'),
+    };
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.post('http://localhost:11001/eCard', formData, {
+      await axios.post('http://localhost:11001/eCard', updatedFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -118,13 +122,6 @@ const AddECardForm: React.FC = () => {
       <h2>Add New eCard</h2>
       <form className="termin-form" onSubmit={handleSubmit}>
       <div className="form-group">
-          <label>User:</label>
-          <select name="userId" value={formData.userId} onChange={handleInputChange}>
-            <option value="">Select a User</option>
-            {users.map((user) => (
-              <option key={user._id} value={user._id}>{user.username}</option>
-            ))}
-          </select>
         </div>
         <div className="form-group">
           <label>Date of Birth:</label>
@@ -152,7 +149,26 @@ const AddECardForm: React.FC = () => {
             onChange={handleInputChange}
           />
         </div>
-        {/* Diseases Section */}
+        <div className="form-group">
+          <label>Blood Type:</label>
+          <select
+            name="bloodType"
+            value={formData.bloodType}
+            onChange={handleInputChange}
+          >
+            <option value="">Doesn't know</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+         {/*
+        {/* Diseases Section 
         <div className="form-group">
           <label>Diseases:</label>
           {formData.diseases.map((disease, index) => (
@@ -168,7 +184,8 @@ const AddECardForm: React.FC = () => {
           ))}
           <button type="button" onClick={handleAddDisease}>Add Disease</button>
         </div>
-        {/* Appointments Section */}
+        */}
+     {/*    
         <div className="form-group">
           <label>Appointments:</label>
           {formData.appointments.map((appointment, index) => (
@@ -182,8 +199,8 @@ const AddECardForm: React.FC = () => {
               <button type="button" onClick={() => handleRemoveAppointment(index)}>Remove</button>
             </div>
           ))}
-          <button type="button" onClick={handleAddAppointment}>Add Appointment</button>
-        </div>
+          <button className="submit-button" type="button" onClick={handleAddAppointment}>Add Appointment</button>
+        </div> */}
         <button className="submit-button" type="submit">Add eCard</button>
       </form>
     </div>

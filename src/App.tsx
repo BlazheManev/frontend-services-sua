@@ -43,7 +43,7 @@ function App() {
           <Route path="/Notifications" element={<Notifications />} />
           <Route path="/AddInstruction" element={<AddInstruction />} />
           <Route path="/Statistics" element={<Statistics />} />
-
+          <Route path="/AddCard" element={<AddCard />} />
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}
           {isAdmin == true && <Route path="/AddCard" element={<AddCard />} />}
