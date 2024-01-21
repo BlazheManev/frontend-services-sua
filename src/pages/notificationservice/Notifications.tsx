@@ -10,8 +10,18 @@ interface Appointment {
   __v: number;
 }
 
+interface Termin {
+  id: string;
+  patientId: string;
+  dateTime: string;
+  serviceType: string;
+  doctor: string;
+  specialRequests: string;
+}
+
 const Notifications = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [termini, setTermini] = useState<Termin[]>([]);
   const [currentView, setCurrentView] = useState('all');
   const [allRead, setAllRead] = useState(false);
 
@@ -42,7 +52,15 @@ const Notifications = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAppointments(response.data);
+
+      if (type === 'all') {
+        setAppointments(response.data);
+        setTermini([]);
+      } else {
+        setTermini(response.data);
+        setAppointments([]);
+      }
+
       setAllRead(false);
     } catch (error) {
       console.error(`Error fetching ${type} appointments:`, error);
@@ -52,7 +70,7 @@ const Notifications = () => {
   const markAllAsRead = async () => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.put('http://localhost:11003/notifications/mark-read', {}, {
+      await axios.put('http://localhost:11003/notifications/mark-read/all', {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,6 +104,19 @@ const Notifications = () => {
       </div>
       {appointments.length > 0 && !allRead && (
         <button className="button mark-read" onClick={markAllAsRead}>Mark All as Read</button>
+      )}
+        {termini.length > 0 && currentView !== 'all' && (
+        <ul className="termini-list">
+          {termini.map((termin) => (
+            <li key={termin.id} className="termin-item">
+              <p>Patient ID: {termin.patientId}</p>
+              <p>Date and Time: {termin.dateTime}</p>
+              <p>Service Type: {termin.serviceType}</p>
+              <p>Doctor: {termin.doctor}</p>
+              <p>Special Requests: {termin.specialRequests}</p>
+            </li>
+          ))}
+        </ul>
       )}
       <ul className="appointments-list">
         {appointments.map((appointment, index) => (

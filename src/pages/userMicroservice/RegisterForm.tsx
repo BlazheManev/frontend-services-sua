@@ -26,7 +26,10 @@ const RegistrationForm: React.FC = () => {
 
     // Reset error message
     setErrorMessage('');
-
+    if (username.length < 5) {
+      setErrorMessage('Username must be at least 5 characters long.');
+      return;
+    }
     try {
       // Send POST request to create a new user
       await axios.post('http://localhost:11002/user', {
