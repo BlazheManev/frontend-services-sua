@@ -11,7 +11,7 @@ function Navbar() {
   const handleLogout = () => {
     sessionStorage.removeItem('jwtToken');
     sessionStorage.removeItem('Admin');
-    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('id');
 
     navigate('/'); // Redirect to home after logout
     window.location.reload();

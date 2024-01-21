@@ -29,11 +29,14 @@ const LoginForm: React.FC = () => {
       );
 
       console.log('Login success:', response.data.token);
+      console.log(response.data)
+
+      console.log(response.data.user.id)
       if(username == "Admin"){
         sessionStorage.setItem('Admin', "true");
       }
       sessionStorage.setItem('jwtToken', response.data.token);
-      sessionStorage.setItem('username', username);
+      sessionStorage.setItem('id', response.data.user.id);
 
       window.location.reload();
       navigate('/');
