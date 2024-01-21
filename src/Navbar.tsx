@@ -58,11 +58,7 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link to="/ResetPass" className="nav-link">
-                Forgot Password
-              </Link>
-            </li>
+           
 
             <li className="nav-item">
               <Link to="/SymptomList" className="nav-link">
@@ -74,6 +70,12 @@ function Navbar() {
             <li className="nav-item">
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 Logout
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/Profile" className="nav-link">
+                Profile
               </Link>
             </li>
           </>

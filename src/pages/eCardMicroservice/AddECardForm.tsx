@@ -111,6 +111,8 @@ const AddECardForm: React.FC = () => {
       });
       // Reset form or navigate away after successful post
       // setFormData({ ...initial state });
+        navigate('/profile'); // Redirect to the profile page
+      
     } catch (error) {
       console.error('Error creating eCard:', error);
     }

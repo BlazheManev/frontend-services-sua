@@ -82,10 +82,6 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
       <h2>Add New Termin</h2>
       <form className="termin-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Patient ID:</label>
-          <input type="text" name="patientId" value={formData.patientId} onChange={handleInputChange} />
-        </div>
-        <div className="form-group">
           <label>Date Time:</label>
           <DatePicker
             selected={formData.dateTime}

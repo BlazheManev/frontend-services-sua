@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Button from '@mui/material/Button';
+import React, { useState } from "react";
+import axios from "axios";
+import Button from "@mui/material/Button";
 
 interface DiseaseSymptoms {
-  temperature: boolean;
+  temperature: number; // Changed to a number
   bodyAches: boolean;
   nausea: boolean;
   vomiting: boolean;
@@ -21,7 +21,7 @@ interface DiseaseSymptoms {
 
 const DiseaseBySymptomsSearch: React.FC = () => {
   const [diseaseSymptoms, setDiseaseSymptoms] = useState<DiseaseSymptoms>({
-    temperature: false,
+    temperature: 30, // Default temperature value is 30
     bodyAches: false,
     nausea: false,
     vomiting: false,
@@ -34,33 +34,40 @@ const DiseaseBySymptomsSearch: React.FC = () => {
     abdominalPain: false,
     faintness: false,
     fever: false,
-    fatigue: false
+    fatigue: false,
   });
-  const [diseaseName, setDiseaseName] = useState('');
+  const [diseaseName, setDiseaseName] = useState("");
   const [loading, setLoading] = useState(false);
-  const token = sessionStorage.getItem('jwtToken');
+  const token = sessionStorage.getItem("jwtToken");
 
   const getDiseaseBySymptoms = async () => {
     if (!token) return;
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:11000/symptoms/disease', diseaseSymptoms, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:11000/symptoms/disease",
+        diseaseSymptoms,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setDiseaseName(response.data.name);
     } catch (error) {
-      console.error('Error fetching disease by symptoms:', error);
-      setDiseaseName('');
+      console.error("Error fetching disease by symptoms:", error);
+      setDiseaseName("");
     } finally {
       setLoading(false);
     }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setDiseaseSymptoms({ ...diseaseSymptoms, [name]: checked });
+    const { name, value, checked } = e.target;
+    setDiseaseSymptoms({
+      ...diseaseSymptoms,
+      [name]: name === "temperature" ? parseInt(value) : checked,
+    });
   };
 
   return (
@@ -70,23 +77,45 @@ const DiseaseBySymptomsSearch: React.FC = () => {
         {Object.keys(diseaseSymptoms).map((symptom) => (
           <label key={symptom}>
             <input
-              type="checkbox"
+              type={symptom === "temperature" ? "number" : "checkbox"} // Use 'number' for temperature
               name={symptom}
-              checked={diseaseSymptoms[symptom as keyof DiseaseSymptoms]}
+              checked={
+                symptom === "temperature"
+                  ? undefined
+                  : (diseaseSymptoms[
+                      symptom as keyof DiseaseSymptoms
+                    ] as boolean)
+              }
+              value={
+                symptom === "temperature"
+                  ? diseaseSymptoms.temperature
+                  : undefined
+              }
+              min={symptom === "temperature" ? 30 : undefined} // Min value for temperature
+              max={symptom === "temperature" ? 40 : undefined} // Max value for temperature
               onChange={handleCheckboxChange}
             />
-            {symptom.charAt(0).toUpperCase() + symptom.slice(1).replace(/([A-Z])/g, ' $1')}
+            {symptom.charAt(0).toUpperCase() +
+              symptom.slice(1).replace(/([A-Z])/g, " $1")}
           </label>
         ))}
       </div>
-      <Button className="search-button" onClick={getDiseaseBySymptoms} disabled={loading}>
+      <Button
+        className="search-button"
+        onClick={getDiseaseBySymptoms}
+        disabled={loading}
+      >
         Check Disease
       </Button>
 
       {loading && <p>Loading...</p>}
       <div className="search-results">
         <h3>Disease Result:</h3>
-        <p>{diseaseName ? `Disease: ${diseaseName}` : 'No disease found based on symptoms.'}</p>
+        <p>
+          {diseaseName
+            ? `Disease: ${diseaseName}`
+            : "No disease found based on symptoms."}
+        </p>
       </div>
     </div>
   );

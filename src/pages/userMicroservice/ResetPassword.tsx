@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 
 const PasswordResetForm: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -47,7 +48,7 @@ const PasswordResetForm: React.FC = () => {
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
-        <button className="reset-button" type="submit">Reset Password</button>
+        <Button variant="contained" color="success"  type="submit">Reset Password</Button>
       </form>
     </div>
   );
