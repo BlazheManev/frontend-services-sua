@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import '../../styles/AddTerminForm.css';
+import { baseUrl } from '../../config';
 
 const AddDiseaseForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ const AddDiseaseForm: React.FC = () => {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.post('http://localhost:11006/disease', formData, {
+      await axios.post(`${baseUrl}:11006/disease`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

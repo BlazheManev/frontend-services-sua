@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Login.css'; // Import your CSS file
+import { baseUrl } from '../../config';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  console.log(baseUrl)
 
   useEffect(() => {
     const isLoggedIn = !!sessionStorage.getItem('jwtToken');
@@ -21,7 +23,7 @@ const LoginForm: React.FC = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:11002/user/login',
+        `${baseUrl}:11002/user/login`,
         {
           username,
           password,

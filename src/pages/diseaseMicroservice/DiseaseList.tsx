@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Instructions from '../instructionMicroservice/InstructionsList';
 import AddInstruction from '../instructionMicroservice/AddInstructionForm';
+import { baseUrl } from '../../config';
 
 interface Disease {
   id: string;
@@ -43,7 +44,8 @@ const DiseaseList: React.FC = () => {
         return;
       }
 
-      const response = await axios.get<Disease[]>('http://localhost:11006/disease', {
+        const response = await axios.get<Disease[]>(`${baseUrl}:11006/disease`, {
+
         headers: {
           Authorization: token,
         },
@@ -79,7 +81,7 @@ const DiseaseList: React.FC = () => {
   const handleUpdate = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.put(`http://localhost:11006/disease/${id}`, editFormData, {
+      await axios.put(`${baseUrl}:11006/disease/${id}`, editFormData, {
         headers: {
           Authorization: token,
         },
@@ -95,7 +97,7 @@ const DiseaseList: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.delete(`http://localhost:11006/disease/${id}`, {
+      await axios.delete(`${baseUrl}:11006/disease/${id}`, {
         headers: {
           Authorization: token,
         },
