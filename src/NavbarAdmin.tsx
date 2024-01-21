@@ -27,11 +27,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-        </li>
+        
         {isLoggedIn && (
           <>
             <li className="nav-item">

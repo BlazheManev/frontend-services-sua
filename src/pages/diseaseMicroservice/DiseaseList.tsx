@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Instructions from '../instructionMicroservice/InstructionsList';
+import AddInstruction from '../instructionMicroservice/AddInstructionForm';
 
 interface Disease {
   id: string;
@@ -17,6 +19,7 @@ const DiseaseList: React.FC = () => {
   const [editFormData, setEditFormData] = useState<Disease>({ id: '', name: '', risk: false, description: '', symptoms: [] });
   const navigate = useNavigate();
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
+  const [activeView, setActiveView] = useState<'viewDiseases' | 'viewInstructions' | 'addInstruction'>('viewDiseases');
 
   useEffect(() => {
     const isLoggedIn = !!sessionStorage.getItem('jwtToken');
@@ -27,6 +30,11 @@ const DiseaseList: React.FC = () => {
     }
   }, [navigate]);
 
+  const getButtonStyle = (viewName: 'viewDiseases' | 'viewInstructions' | 'addInstruction') => {
+    return activeView === viewName
+      ? { backgroundColor: '#007bff', color: 'white' }
+      : {};
+  };
   const fetchData = async () => {
     try {
       const token = sessionStorage.getItem('jwtToken');
@@ -109,57 +117,76 @@ const DiseaseList: React.FC = () => {
 
   return (
     <div className="termini-list-container">
-      <h1>List of Diseases</h1>
-      <table className="termini-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Risk</th>
-            <th>Description</th>
-            <th>Symptoms</th>
-            {isAdmin && <th>Actions</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {diseases.map((disease) => (
-            <tr key={disease.id}>
-              <td>{disease.id}</td>
-              <td>
-                {editingDiseaseId === disease.id ? (
-                  <input type="text" value={editFormData.name} onChange={(e) => handleInputChange(e, 'name')} />
-                ) : (
-                  disease.name
-                )}
-              </td>
-              <td>
-                {editingDiseaseId === disease.id ? (
-                  <input type="checkbox" checked={editFormData.risk} onChange={handleRiskChange} />
-                ) : (
-                  disease.risk ? 'High' : 'Low'
-                )}
-              </td>
-              <td>
-                {editingDiseaseId === disease.id ? (
-                  <input type="text" value={editFormData.description} onChange={(e) => handleInputChange(e, 'description')} />
-                ) : (
-                  disease.description
-                )}
-              </td>
-              <td>
-                {editingDiseaseId === disease.id ? (
-                  <input type="text" value={editFormData.symptoms.join(', ')} onChange={(e) => handleInputChange(e, 'symptoms')} />
-                ) : (
-                  disease.symptoms.join(', ')
-                )}
-              </td>
-              <td>
-              {renderActionButtons(disease)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+       <div>
+        <Button style={getButtonStyle('viewDiseases')} onClick={() => setActiveView('viewDiseases')}>View Diseases</Button>
+        <Button style={getButtonStyle('viewInstructions')} onClick={() => setActiveView('viewInstructions')}>View Instructions</Button>
+        <Button style={getButtonStyle('addInstruction')} onClick={() => setActiveView('addInstruction')}>Add Instruction</Button>
+      </div>
+
+      {activeView === 'viewDiseases' && (
+          <>
+              <h1>List of Diseases</h1>
+
+       <table className="termini-table">
+       <thead>
+         <tr>
+           <th>ID</th>
+           <th>Name</th>
+           <th>Risk</th>
+           <th>Description</th>
+           <th>Symptoms</th>
+           {isAdmin && <th>Actions</th>}
+         </tr>
+       </thead>
+       <tbody>
+         {diseases.map((disease) => (
+           <tr key={disease.id}>
+             <td>{disease.id}</td>
+             <td>
+               {editingDiseaseId === disease.id ? (
+                 <input type="text" value={editFormData.name} onChange={(e) => handleInputChange(e, 'name')} />
+               ) : (
+                 disease.name
+               )}
+             </td>
+             <td>
+               {editingDiseaseId === disease.id ? (
+                 <input type="checkbox" checked={editFormData.risk} onChange={handleRiskChange} />
+               ) : (
+                 disease.risk ? 'High' : 'Low'
+               )}
+             </td>
+             <td>
+               {editingDiseaseId === disease.id ? (
+                 <input type="text" value={editFormData.description} onChange={(e) => handleInputChange(e, 'description')} />
+               ) : (
+                 disease.description
+               )}
+             </td>
+             <td>
+               {editingDiseaseId === disease.id ? (
+                 <input type="text" value={editFormData.symptoms.join(', ')} onChange={(e) => handleInputChange(e, 'symptoms')} />
+               ) : (
+                 disease.symptoms.join(', ')
+               )}
+             </td>
+             <td>
+             {renderActionButtons(disease)}
+             </td>
+           </tr>
+         ))}
+       </tbody>
+     </table>
+     </>
+      )}
+
+      {activeView === 'viewInstructions' && (
+        <Instructions />
+      )}
+
+      {activeView === 'addInstruction' && (
+        <AddInstruction />
+      )}     
     </div>
   );
 };

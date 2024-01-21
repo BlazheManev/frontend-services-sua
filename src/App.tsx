@@ -18,6 +18,7 @@ import SymptomList from './pages/syptomsMicroservice/SymptomList';
 import Notifications from './pages/notificationservice/Notifications';
 import AddDisease from './pages/diseaseMicroservice/AddDiseaseForm';
 import AddNotification from './pages/notificationservice/AddNotifications';
+import AddInstruction from './pages/instructionMicroservice/AddInstructionForm';
 
 function App() {
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
@@ -39,7 +40,7 @@ function App() {
           <Route path="/ResetPass" element={<ResetPass />} />
           <Route path="/SymptomList" element={<SymptomList />} />
           <Route path="/Notifications" element={<Notifications />} />
-          <Route path="/AddDisease" element={<AddDisease />} />
+          <Route path="/AddInstruction" element={<AddInstruction />} />
 
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}
