@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../styles/AddTerminForm.css';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../config';
 
 interface User {
   _id: string;
@@ -37,7 +38,7 @@ const AddECardForm: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<User[]>('http://localhost:11002/users', {
+      const response = await axios.get<User[]>(`${baseUrl}:11002/users`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('jwtToken')}`,
         },
@@ -103,7 +104,7 @@ const AddECardForm: React.FC = () => {
     };
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.post('http://localhost:11001/eCard', updatedFormData, {
+      await axios.post(`${baseUrl}:11001/eCard`, updatedFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

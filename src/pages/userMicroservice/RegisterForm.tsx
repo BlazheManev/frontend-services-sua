@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Login.css'; 
+import { baseUrl } from '../../config';
 
 const RegistrationForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -32,7 +33,7 @@ const RegistrationForm: React.FC = () => {
     }
     try {
       // Send POST request to create a new user
-      await axios.post('http://localhost:11002/user', {
+      await axios.post(`${baseUrl}:11002/user`, {
         username,
         email,
         password,

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import { baseUrl } from "../../config";
 
 interface DiseaseSymptoms {
   temperature: number; // Changed to a number
@@ -45,7 +46,7 @@ const DiseaseBySymptomsSearch: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:11000/symptoms/disease",
+        `${baseUrl}:11000/symptoms/disease`,
         diseaseSymptoms,
         {
           headers: {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import '../../styles/Login.css'; // Import your CSS file
+import { baseUrl } from '../../config';
 
 const AddNotificationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const AddNotificationForm: React.FC = () => {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.post('http://localhost:11003/notifications', formData, {
+      await axios.post(`${baseUrl}:11003/notifications`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

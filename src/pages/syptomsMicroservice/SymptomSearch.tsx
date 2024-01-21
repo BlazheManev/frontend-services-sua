@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import '../../styles/Symptoms.css';
+import { baseUrl } from '../../config';
 
 interface Symptom {
   id: string;
@@ -20,7 +21,7 @@ const SymptomsByCauseSearch: React.FC = () => {
     if (!token) return;
     try {
       setLoading(true);
-      const response = await axios.get<Symptom[]>(`http://localhost:11000/symptoms/cause/${cause}`, {
+      const response = await axios.get<Symptom[]>(`${baseUrl}:11000/symptoms/cause/${cause}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

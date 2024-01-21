@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../config';
 
 
 interface User {
@@ -26,7 +27,7 @@ const UsersList: React.FC = () => {
           // Handle the lack of a token (e.g., redirect to login)
           return;
         }
-        const response = await axios.get<User[]>('http://localhost:11002/users', {
+        const response = await axios.get<User[]>(`${baseUrl}:11002/users`, {
           headers: {
             Authorization: `Bearer ${token}` // Set the token in the Authorization header
           }
@@ -59,7 +60,7 @@ const UsersList: React.FC = () => {
     };
 
     try {
-      await axios.put(`http://localhost:11002/user/${userId}`, updatedUser, {
+      await axios.put(`${baseUrl}:11002/user/${userId}`, updatedUser, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('jwtToken')}`
         }
@@ -76,7 +77,7 @@ const UsersList: React.FC = () => {
 
   const handleDelete = async (userId: string) => {
     try {
-      await axios.delete(`http://localhost:11002/user/${userId}`, {
+      await axios.delete(`${baseUrl}:11002/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('jwtToken')}`
         }

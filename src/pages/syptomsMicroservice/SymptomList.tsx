@@ -6,6 +6,7 @@ import SymptomSearchByCause from './SymptomSearch';
 import SymptomSearchByName from './SymptomsByNameSearch';
 import DiseaseBySymptomsSearch from './DiseaseBySymptomsSearch';
 import AddSymptom from './AddSymptom';
+import { baseUrl } from '../../config';
 
 interface Symptom {
   id: string;
@@ -43,7 +44,7 @@ const SymptomList: React.FC = () => {
           navigate('/');
           return;
         }
-        const response = await axios.get<Symptom[]>('http://localhost:11000/symptoms', {
+        const response = await axios.get<Symptom[]>(`${baseUrl}:11000/symptoms`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,7 +69,7 @@ const SymptomList: React.FC = () => {
         navigate('/');
         return;
       }
-      await axios.put(`http://localhost:11000/symptoms/${id}`, editFormData, {
+      await axios.put(`${baseUrl}:11000/symptoms/${id}`, editFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -96,7 +97,7 @@ const SymptomList: React.FC = () => {
         navigate('/');
         return;
       }
-      await axios.delete(`http://localhost:11000/symptoms/${id}`, {
+      await axios.delete(`${baseUrl}:11000/symptoms/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

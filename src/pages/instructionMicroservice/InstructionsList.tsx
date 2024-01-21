@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../config';
 
 interface Instruction {
   id: string;
@@ -29,7 +30,7 @@ const InstructionsList: React.FC = () => {
         navigate('/');
         return;
       }
-      const response = await axios.get<Instruction[]>('http://localhost:11007/instructions', {
+      const response = await axios.get<Instruction[]>(`${baseUrl}:11007/instructions`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +49,7 @@ const InstructionsList: React.FC = () => {
   const handleUpdate = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.put(`http://localhost:11007/instructions/${id}`, editFormData, {
+      await axios.put(`${baseUrl}:11007/instructions/${id}`, editFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,7 +65,7 @@ const InstructionsList: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.delete(`http://localhost:11007/instructions/${id}`, {
+      await axios.delete(`${baseUrl}:11007/instructions/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { baseUrl } from '../../config';
 
 interface Symptom {
   id: string;
@@ -20,7 +21,7 @@ const SymptomsByNameSearch: React.FC = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`http://localhost:11000/symptoms/name/${name}`, {
+      const response = await axios.get(`${baseUrl}:11000/symptoms/name/${name}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

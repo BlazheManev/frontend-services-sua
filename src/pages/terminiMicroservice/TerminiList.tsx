@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { baseUrl } from '../../config';
 
 interface Termin {
   id: string;
@@ -53,7 +54,7 @@ const TerminiList: React.FC = () => {
         return;
       }
       const endpoint = filter === 'all' ? 'all' : filter === 'past' ? 'past' : 'future';
-      const response = await axios.get<Termin[]>(`http://localhost:11005/api/termini/${endpoint}`, {
+      const response = await axios.get<Termin[]>(`${baseUrl}:11005/api/termini/${endpoint}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -82,7 +83,7 @@ const TerminiList: React.FC = () => {
   const handleUpdate = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.put(`http://localhost:11005/api/termini/update/${id}`, editFormData, {
+      await axios.put(`${baseUrl}:11005/api/termini/update/${id}`, editFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -98,7 +99,7 @@ const TerminiList: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.delete(`http://localhost:11005/api/termini/delete/${id}`, {
+      await axios.delete(`${baseUrl}:11005/api/termini/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

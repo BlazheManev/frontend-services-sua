@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { baseUrl } from '../../config';
 
 const PasswordResetForm: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -18,7 +19,7 @@ const PasswordResetForm: React.FC = () => {
       }
 
       // Include the JWT token in the request header
-      const response = await axios.post('http://localhost:11002/user/reset-pass', {
+      const response = await axios.post(`${baseUrl}:11002/user/reset-pass`, {
         newPassword,
       }, {
         headers: {

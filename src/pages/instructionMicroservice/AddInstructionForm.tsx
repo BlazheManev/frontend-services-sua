@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { baseUrl } from '../../config';
 
 interface AddInstructionFormProps {
   diseaseId?: string; // Making diseaseId optional
@@ -27,7 +28,7 @@ const AddInstructionForm: React.FC<AddInstructionFormProps> = ({ diseaseId = '' 
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.post('http://localhost:11007/instructions', instructionData, {
+      await axios.post(`${baseUrl}:11007/instructions`, instructionData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

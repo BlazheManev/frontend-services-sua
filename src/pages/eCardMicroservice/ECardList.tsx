@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../config';
 
 interface ECard {
   id: string;
@@ -28,7 +29,7 @@ const ECardList: React.FC = () => {
         return;
       }
       try {
-        const response = await axios.get<ECard[]>('http://localhost:11001/eCard', {
+        const response = await axios.get<ECard[]>(`${baseUrl}:11001/eCard`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -58,7 +59,7 @@ const ECardList: React.FC = () => {
         navigate('/');
         return;
       }
-      await axios.put(`http://localhost:11001/eCard/${id}`, editFormData, {
+      await axios.put(`${baseUrl}:11001/eCard/${id}`, editFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,7 +81,7 @@ const ECardList: React.FC = () => {
         navigate('/');
         return;
       }
-      await axios.delete(`http://localhost:11001/eCard/${id}`, {
+      await axios.delete(`${baseUrl}:11001/eCard/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

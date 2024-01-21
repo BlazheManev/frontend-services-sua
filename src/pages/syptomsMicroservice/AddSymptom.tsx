@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import '../../styles/AddTerminForm.css';
+import { baseUrl } from '../../config';
 
 interface SymptomCause {
   cause: string;
@@ -45,7 +46,7 @@ const AddSymptomForm: React.FC = () => {
         ...formData,
         causes: formData.causes.map(item => item.cause),
       };
-      await axios.post('http://localhost:11000/symptoms', symptomData, {
+      await axios.post(`${baseUrl}:11000/symptoms`, symptomData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

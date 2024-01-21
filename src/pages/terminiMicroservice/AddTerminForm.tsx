@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/AddTerminForm.css'; // Import your CSS file
+import { baseUrl } from '../../config';
 
 interface AddTerminFormProps {
   onTerminAdded?: () => void;
@@ -50,7 +51,7 @@ const AddTerminForm: React.FC<AddTerminFormProps> = ({ onTerminAdded }) => {
       const token = sessionStorage.getItem('jwtToken');
 
       const response = await axios.post(
-        'http://localhost:11005/api/termini/create',
+        `${baseUrl}:11005/api/termini/create`,
         formData,
         {
           headers: {

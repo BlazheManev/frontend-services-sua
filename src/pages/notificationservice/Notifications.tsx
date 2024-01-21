@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/Notifications.css'; // Import your CSS file for styling
+import { baseUrl } from '../../config';
 
 interface Appointment {
   _id: string;
@@ -47,7 +48,7 @@ const Notifications = () => {
           return;
       }
 
-      const response = await axios.get(`http://localhost:11003${endpoint}`, {
+      const response = await axios.get(`${baseUrl}:11003${endpoint}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,7 +71,7 @@ const Notifications = () => {
   const markAllAsRead = async () => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.put('http://localhost:11003/notifications/mark-read/all', {}, {
+      await axios.put(`${baseUrl}:11003/notifications/mark-read/all`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,7 +85,7 @@ const Notifications = () => {
   const handleDeleteNotification = async (id: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      await axios.delete(`http://localhost:11003/notifications/${id}`, {
+      await axios.delete(`${baseUrl}:11003/notifications/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

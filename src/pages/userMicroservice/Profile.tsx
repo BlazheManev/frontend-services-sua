@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/UserCardAndAppointments.css';
 import Button from '@mui/material/Button';
+import { baseUrl } from '../../config';
 
 const UserCardAndAppointments: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -14,14 +15,14 @@ const UserCardAndAppointments: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:11002/user/${userId}`, {
+        const response = await axios.get(`${baseUrl}:11002/user/${userId}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         setUserData(response.data);
 
         if (response.data.card && response.data.card.appointments) {
           const fetchedAppointments = await Promise.all(response.data.card.appointments.map(async (appointmentId: string) => {
-            const appointmentResponse = await axios.get(`http://localhost:11005/api/termini/${appointmentId}`, {
+            const appointmentResponse = await axios.get(`${baseUrl}:11005/api/termini/${appointmentId}`, {
               headers: { Authorization: `Bearer ${authToken}` },
             });
             return appointmentResponse.data;
