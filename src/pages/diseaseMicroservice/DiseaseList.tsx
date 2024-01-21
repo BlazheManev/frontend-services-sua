@@ -16,6 +16,7 @@ const DiseaseList: React.FC = () => {
   const [editingDiseaseId, setEditingDiseaseId] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState<Disease>({ id: '', name: '', risk: false, description: '', symptoms: [] });
   const navigate = useNavigate();
+  const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
 
   useEffect(() => {
     const isLoggedIn = !!sessionStorage.getItem('jwtToken');
@@ -49,6 +50,22 @@ const DiseaseList: React.FC = () => {
   const handleEditClick = (disease: Disease) => {
     setEditingDiseaseId(disease.id);
     setEditFormData(disease);
+  };
+  const renderActionButtons = (disease: Disease) => {
+    if (isAdmin) {
+      return editingDiseaseId === disease.id ? (
+        <>
+          <Button variant="contained" color="primary" onClick={() => handleUpdate(disease.id)}>Save</Button>
+          <Button variant="contained" color="secondary" onClick={() => setEditingDiseaseId(null)}>Cancel</Button>
+        </>
+      ) : (
+        <>
+          <Button variant="contained" color="primary" onClick={() => handleEditClick(disease)}>Edit</Button>
+          <Button variant="contained" color="error" onClick={() => handleDelete(disease.id)}>Delete</Button>
+        </>
+      );
+    }
+    return null;
   };
 
   const handleUpdate = async (id: string) => {
@@ -101,7 +118,7 @@ const DiseaseList: React.FC = () => {
             <th>Risk</th>
             <th>Description</th>
             <th>Symptoms</th>
-            <th>Actions</th>
+            {isAdmin && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -137,17 +154,7 @@ const DiseaseList: React.FC = () => {
                 )}
               </td>
               <td>
-                {editingDiseaseId === disease.id ? (
-                  <>
-                    <Button variant="contained" color="primary" onClick={() => handleUpdate(disease.id)}>Save</Button>
-                    <Button variant="contained" color="secondary" onClick={() => setEditingDiseaseId(null)}>Cancel</Button>
-                  </>
-                ) : (
-                  <>
-                    <Button variant="contained" color="primary" onClick={() => handleEditClick(disease)}>Edit</Button>
-                    <Button variant="contained" color="error" onClick={() => handleDelete(disease.id)}>Delete</Button>
-                  </>
-                )}
+              {renderActionButtons(disease)}
               </td>
             </tr>
           ))}

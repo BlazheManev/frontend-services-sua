@@ -17,6 +17,7 @@ import AddCard from './pages/eCardMicroservice/AddECardForm';
 import SymptomList from './pages/syptomsMicroservice/SymptomList';
 import Notifications from './pages/notificationservice/Notifications';
 import AddDisease from './pages/diseaseMicroservice/AddDiseaseForm';
+import AddNotification from './pages/notificationservice/AddNotifications';
 
 function App() {
   const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
@@ -43,6 +44,8 @@ function App() {
           {/* Admin-only route */}
           {isAdmin == true && <Route path="/AllUsers" element={<AllUsers />} />}
           {isAdmin == true && <Route path="/AddCard" element={<AddCard />} />}
+          {isAdmin == true && <Route path="/AddNotification" element={<AddNotification />} />}
+          {isAdmin == true && <Route path="/AddDisease" element={<AddDisease />} /> }
 
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>

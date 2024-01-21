@@ -88,6 +88,11 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to="/AddNotification" className="nav-link">
+                Add Alert
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 Logout
               </Link>

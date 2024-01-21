@@ -18,6 +18,7 @@ const TerminiList: React.FC = () => {
   const [editFormData, setEditFormData] = useState<Termin>({ id: '', patientId: '', dateTime: '', serviceType: '', doctor: '', specialRequests: '' });
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<'all' | 'past' | 'future'>('all');
+  const isAdmin = sessionStorage.getItem('Admin') === 'true'; // Check if the user is an admin
 
   useEffect(() => {
     const isLoggedIn = !!sessionStorage.getItem('jwtToken');
@@ -28,6 +29,22 @@ const TerminiList: React.FC = () => {
     }
   }, [activeFilter]);
 
+  const renderActionButtons = (termin: Termin) => {
+    if (isAdmin) {
+      return editingTerminId === termin.id ? (
+        <>
+          <Button variant="contained" color="primary" onClick={() => handleUpdate(termin.id)}>Save</Button>
+          <Button variant="contained" color="secondary" onClick={() => setEditingTerminId(null)}>Cancel</Button>
+        </>
+      ) : (
+        <>
+          <Button variant="contained" color="primary" onClick={() => handleEditClick(termin)}>Edit</Button>
+          <Button variant="contained" color="error" onClick={() => handleDelete(termin.id)}>Delete</Button>
+        </>
+      );
+    }
+    return null;
+  };
   const fetchTermini = async (filter: 'all' | 'past' | 'future') => {
     try {
       const token = sessionStorage.getItem('jwtToken');
@@ -48,7 +65,9 @@ const TerminiList: React.FC = () => {
   };
 
   const getButtonStyle = (filterName: 'all' | 'past' | 'future') => {
-    return activeFilter === filterName ? { backgroundColor: 'Orange' } : {};
+    return activeFilter === filterName
+      ? { backgroundColor: '#007bff', color: 'white' }
+      : {};
   };
 
   const handleEditClick = (termin: Termin) => {
@@ -113,7 +132,7 @@ const TerminiList: React.FC = () => {
             <th>Service Type</th>
             <th>Doctor</th>
             <th>Special Requests</th>
-            <th>Actions</th>
+            {isAdmin && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -165,17 +184,7 @@ const TerminiList: React.FC = () => {
                 ) : termin.specialRequests}
               </td>
               <td>
-                {editingTerminId === termin.id ? (
-                  <>
-                    <Button variant="contained" color="primary" onClick={() => handleUpdate(termin.id)}>Save</Button>
-                    <Button variant="contained" color="secondary" onClick={() => setEditingTerminId(null)}>Cancel</Button>
-                  </>
-                ) : (
-                  <>
-                    <Button variant="contained" color="primary" onClick={() => handleEditClick(termin)}>Edit</Button>
-                    <Button variant="contained" color="error" onClick={() => handleDelete(termin.id)}>Delete</Button>
-                  </>
-                )}
+                {renderActionButtons(termin)}
               </td>
             </tr>
           ))}

@@ -85,7 +85,9 @@ const SymptomList: React.FC = () => {
   };
 
   const getButtonStyle = (componentName: string) => {
-    return componentName === activeComponent ? { backgroundColor: 'Orange' } : {};
+    return componentName === activeComponent
+      ? { backgroundColor: '#007bff', color: 'white' }
+      : {};
   };
   const handleDelete = async (id: string) => {
     try {

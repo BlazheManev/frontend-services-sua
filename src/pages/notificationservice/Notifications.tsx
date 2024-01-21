@@ -1,29 +1,51 @@
-// Notifications.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../../styles/Notifications.css'; // Import your CSS file for styling
+
+interface Appointment {
+  _id: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  __v: number;
+}
 
 const Notifications = () => {
-  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [currentView, setCurrentView] = useState('all');
   const [allRead, setAllRead] = useState(false);
 
   useEffect(() => {
-    fetchUpcomingAppointments();
-  }, []);
+    fetchNotifications(currentView);
+  }, [currentView]);
 
-  const fetchUpcomingAppointments = async () => {
+  const fetchNotifications = async (type: string) => {
     try {
       const token = sessionStorage.getItem('jwtToken');
-      console.log(token)
+      let endpoint = '';
+      switch (type) {
+        case 'all':
+          endpoint = '/notifications';
+          break;
+        case 'upcoming':
+          endpoint = '/notifications/upcoming-appointments';
+          break;
+        case 'past':
+          endpoint = '/notifications/past-appointments';
+          break;
+        default:
+          return;
+      }
 
-      const response = await axios.get('http://localhost:11003/notifications/upcoming-appointments', {
+      const response = await axios.get(`http://localhost:11003${endpoint}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUpcomingAppointments(response.data);
+      setAppointments(response.data);
       setAllRead(false);
     } catch (error) {
-      console.error('Error fetching upcoming appointments:', error);
+      console.error(`Error fetching ${type} appointments:`, error);
     }
   };
 
@@ -41,16 +63,36 @@ const Notifications = () => {
     }
   };
 
+  const handleDeleteNotification = async (id: string) => {
+    try {
+      const token = sessionStorage.getItem('jwtToken');
+      await axios.delete(`http://localhost:11003/notifications/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAppointments(appointments.filter(appointment => appointment._id !== id));
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+    }
+  };
+
   return (
-    <div>
-      <button onClick={fetchUpcomingAppointments}>Check Upcoming Appointments</button>
-      {upcomingAppointments.length > 0 && !allRead && (
-        <button onClick={markAllAsRead}>Mark All as Read</button>
+    <div className="notifications-container">
+      <div className="buttons-group">
+        <button className={`button ${currentView === 'all' ? 'active' : ''}`} onClick={() => setCurrentView('all')}>All Appointments</button>
+        <button className={`button ${currentView === 'upcoming' ? 'active' : ''}`} onClick={() => setCurrentView('upcoming')}>Upcoming Appointments</button>
+        <button className={`button ${currentView === 'past' ? 'active' : ''}`} onClick={() => setCurrentView('past')}>Past Appointments</button>
+      </div>
+      {appointments.length > 0 && !allRead && (
+        <button className="button mark-read" onClick={markAllAsRead}>Mark All as Read</button>
       )}
-      {/* Display upcoming appointments here */}
-      <ul>
-        {upcomingAppointments.map((appointment, index) => (
-          <li key={index}>{appointment}</li>
+      <ul className="appointments-list">
+        {appointments.map((appointment, index) => (
+          <li key={index} className="appointment-item">
+            <strong>{appointment.title}</strong>: {appointment.message}
+            <button className="delete-button" onClick={() => handleDeleteNotification(appointment._id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>

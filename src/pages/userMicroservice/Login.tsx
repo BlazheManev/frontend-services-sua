@@ -64,7 +64,7 @@ const LoginForm: React.FC = () => {
         />
         <button className="login-button" type="submit">Login</button>
       </form>
-      <p className="credentials-note">Default credentials: username: newjwt | pass: newjwt</p>
+      <p className="credentials-note">Default credentials: username: testhash | pass: testhash</p>
     </div>
   );
 };
